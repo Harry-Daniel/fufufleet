@@ -1,6 +1,6 @@
 {
   "expo": {
-    "scheme": "{{{ projectName }}}",
+    "scheme": "FufuFleet",
     "name": "fufufleet",
     "slug": "fufufleet",
     "version": "1.0.0",
