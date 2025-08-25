@@ -7,13 +7,21 @@ import {
 } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import fullstar from "../assets/icons/fullstar.png";
+import { useRouter } from "expo-router";
 
 const { height, width } = Dimensions.get("screen");
 const RestaurantCard = ({ item }) => {
+  const router = useRouter();
+  const handlePress = () => {
+    router.push({ pathname: "/restaurant", params: { params: JSON.stringify({ ...item }) } });
+  };
+
   return (
-    <TouchableWithoutFeedback>
-      <View className="mr-6 bg-white rounded-3xl shadow-lg shadow-brand" 
-      style={{shadowRadius:7}}>
+    <TouchableWithoutFeedback onPress={handlePress}>
+      <View
+        className="mr-6 bg-white rounded-3xl shadow-lg shadow-brand"
+        style={{ shadowRadius: 7 }}
+      >
         <Image
           style={{
             height: height * 0.18,
