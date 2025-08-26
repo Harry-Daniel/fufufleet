@@ -1,10 +1,16 @@
+import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+
 
 const CartIcon = () => {
+const router = useRouter()
+
+    const handlePress=()=>{
+        router.push({pathname:"/cart"})
+    }
   return (
     <View className="absolute bottom-14 w-full z-50">
-      <TouchableOpacity className="bg-brand flex-row justify-between items-center mx-5 rounded-full p-4 py-3 shadow-lg">
+      <TouchableOpacity onPress={handlePress} className="bg-brand flex-row justify-between items-center mx-5 rounded-full p-4 py-3 shadow-lg">
         <View
           className="p-2 px-4 rounded-full"
           style={{ backgroundColor: "rgba(255,255,255,0.3)" }}
