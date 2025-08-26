@@ -9,6 +9,7 @@ module.exports = {
         // Example: Add your custom colors here
         brand: {
           DEFAULT: "#EF8A17", // main brand color
+          lowOpacity:"#EF8A1720"
           // dark: "#15803d", // optional darker shade
           // light: "#22c55e", // optional lighter shade
         },
