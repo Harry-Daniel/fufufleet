@@ -41,7 +41,7 @@ const CartScreen = () => {
       </View>
 
       {/* delivery time */}
-      <View className="bg-brand-lowOpacity mt-5  flex-row px-4 items-center ">
+      <View className="bg-brand-opacity20 mt-5  flex-row px-4 items-center ">
         <Image source={bikeguy} className="w-20 h-28    scale-90" />
         <Text className="flex-1 pl-4">Deliver in 20-30 minutes</Text>
         <TouchableOpacity>
@@ -78,7 +78,7 @@ const CartScreen = () => {
         })}
       </ScrollView>
       {/* total */}
-      <View className="p-6 px-8 rounded-t-3xl gap-y-4 bg-brand-lowOpacity pb-12">
+      <View className="p-6 px-8 rounded-t-3xl gap-y-4 bg-brand-opacity20 pb-12">
         <View className="flex-row justify-between">
           <Text className="text-gray-700">Subtotal</Text>
           <Text className="text-gray-700">₵20</Text>
