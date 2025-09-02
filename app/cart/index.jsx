@@ -12,14 +12,41 @@ import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
 import bikeguy from "../../assets/images/bikeguy.png";
+import { useCartStore, useRestaurantStore } from "../../store";
+import { useEffect, useState } from "react";
 
 const CartScreen = () => {
   const router = useRouter();
-  const restaurant = featured.restaurants[0];
-
   const handlePlaceOrder = () => {
     router.push({ pathname: "/orderPreparing" });
   };
+
+  // Zustand Hooks
+  const restaurant = useRestaurantStore((state) => state.restaurant);
+  const cartItems = useCartStore((state) => state.items);
+  const cartItemsTotal = cartItems.reduce(
+    (total, item) => (total = total + item.price),
+    0
+  );
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+
+  const [groupedItems, setGroupedItems] = useState({});
+  const deliverFee = 2;
+
+  const handleDecrease = (item) => {
+    removeFromCart(item);
+  };
+  useEffect(() => {
+    const items = cartItems.reduce((group, item) => {
+      if (group[item.id]) {
+        group[item.id].push(item);
+      } else {
+        group[item.id] = [item];
+      }
+      return group;
+    }, {});
+    setGroupedItems(items);
+  }, [cartItems]);
 
   return (
     <SafeAreaView className="bg-white h-full">
@@ -58,19 +85,23 @@ const CartScreen = () => {
         }}
         className="bg-white pt-5"
       >
-        {restaurant.dishes.map((dish, index) => {
+        {Object.entries(groupedItems).map(([key, items]) => {
+          const dish = items[0];
           return (
             <View
-              key={index}
+              key={key}
               className="flex-row items-center gap-x-3 py-2 px-4 bg-white rounded-3xl  mx-2 mb-3 shadow-md"
             >
-              <Text className="font-bold text-brand"> 2 x</Text>
+              <Text className="font-bold text-brand"> {items.length} x</Text>
               <Image className="h-14 w-14 rounded-full" source={dish.image} />
               <Text className="flex-1 font-bold text-gray-700 ">
                 {dish.name}
               </Text>
               <Text className=" font-semibold text-base ">₵ {dish.price}</Text>
-              <TouchableOpacity className="p-1 rounded-full bg-brand">
+              <TouchableOpacity
+                onPress={() => handleDecrease(dish)}
+                className="p-1 rounded-full bg-brand"
+              >
                 <Feather name="minus" size={20} color="white" />
               </TouchableOpacity>
             </View>
@@ -81,15 +112,17 @@ const CartScreen = () => {
       <View className="p-6 px-8 rounded-t-3xl gap-y-4 bg-brand-opacity20 pb-12">
         <View className="flex-row justify-between">
           <Text className="text-gray-700">Subtotal</Text>
-          <Text className="text-gray-700">₵20</Text>
+          <Text className="text-gray-700">₵{cartItemsTotal}</Text>
         </View>
         <View className="flex-row justify-between">
           <Text className="text-gray-700">Delivery Fee</Text>
-          <Text className="text-gray-700">₵2</Text>
+          <Text className="text-gray-700">₵{deliverFee}</Text>
         </View>
         <View className="flex-row justify-between">
           <Text className="text-gray-700 font-extrabold">Order Total</Text>
-          <Text className="text-gray-700 font-extrabold">₵22</Text>
+          <Text className="text-gray-700 font-extrabold">
+            ₵{deliverFee + cartItemsTotal}
+          </Text>
         </View>
         <View>
           <TouchableOpacity

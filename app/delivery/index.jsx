@@ -6,11 +6,20 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import bikeguy from "../../assets/images/bikeguy.png";
 import deliverygirl from "../../assets/images/deliverygirl.jpg";
 import { Feather } from "@expo/vector-icons";
+import { useCartStore, useRestaurantStore } from "../../store";
 
 const { width, height } = Dimensions.get("screen");
 const DeliveryScreen = () => {
-  const restaurant = featured.restaurants[0];
+  const restaurant = useRestaurantStore((state) => state.restaurant);
   const router = useRouter();
+
+  // Zustand Hooks
+  const emptyCart = useCartStore((state) => state.emptyCart);
+
+  const cancelOrder = () => {
+    router.push({ pathname: "/" });
+    emptyCart()
+  };
   return (
     <View className=" relative" style={{ width: width, height: height }}>
       <MapView
@@ -69,7 +78,7 @@ const DeliveryScreen = () => {
               <Feather name="phone" color="white" size={24} />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => router.push({ pathname: "/" })}
+              onPress={cancelOrder}
               className="bg-red-600 p-2 rounded-full"
             >
               <Feather name="x" color="white" size={24} />

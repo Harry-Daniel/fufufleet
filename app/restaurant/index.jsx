@@ -13,14 +13,27 @@ import fullstar from "../../assets/icons/fullstar.png";
 import DishRow from "../../components/dishRow";
 import { StatusBar } from "expo-status-bar";
 import CartIcon from "../../components/cartIcon";
+import { useEffect } from "react";
+import { useRestaurantStore } from "../../store";
 
 const { height } = Dimensions.get("screen");
 const RestaurantScreen = () => {
   const { params } = useLocalSearchParams();
   const router = useRouter();
   let item = JSON.parse(params);
+
+  // Zustand Hooks
+  const setRestaurant=useRestaurantStore((state)=>state.setRestaurant)
+
+
   // console.log(item);
 
+  useEffect(()=>{
+    if (item && item.id){
+setRestaurant({...item})
+    }
+
+  },[])
   return (
     <View>
       <CartIcon />
