@@ -3,7 +3,7 @@ import { Slot } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 const RootLayout = () => {
   return (
-    <View className="mb-8">
+    <View >
       <Slot />
     </View>
   );

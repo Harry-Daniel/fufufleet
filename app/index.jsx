@@ -47,7 +47,7 @@ const Home = () => {
 
         {/* featured */}
         <View className="mt-5 mb-20">
-          {[featured, featured, featured].map((item, index) => {
+          {[featured].map((item, index) => {
             return <FeaturedRow 
             key={index} 
             title={item.title} 
